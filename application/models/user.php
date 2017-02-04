@@ -13,12 +13,19 @@ class User extends CI_Model {
 		if (! preg_match("/^[1-9][0-9]{3}-[0-1][0-9]-[0-3][0-9]$/", $date)){
 			return 'Invalid date format. Please enter yyyy-mm-dd (ex. 2015-12-29)';
 		}
-		$dob_obj = date_create_from_format('Y-m-d', $date);
-		$now = date('Y-m-d');
 
-		if ($now < $dob_obj){
-			return 'Date of Birth cannot be future date';
-		}
+		$dob_obj = date_create_from_format('Y-m-d', $date);
+
+		if ($dob_obj->getTimestamp()>strtotime("now")) {
+      	return "Please pick a valid birthday";
+    	}
+    
+		// $dob_obj = date_create_from_format('Y-m-d', $date);
+		// $now = date('Y-m-d');
+
+		// if ($now < $dob_obj){
+		// 	return 'Date of Birth cannot be future date';
+		// }
 		return null;
 	}
 
